@@ -1,17 +1,37 @@
 const express = require('express');
+const Users = require('./userDb.js');
 
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  // do your magic!
+  const postFromClient = req.body
+  Users.insert(postFromClient)
+    .then(data => {
+      res.status(201).json(data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(500).json({
+        message: "There was an error while saving the user to the database"
+      })
+    })
 });
 
 router.post('/:id/posts', (req, res) => {
-  // do your magic!
+  
 });
 
 router.get('/', (req, res) => {
-  // do your magic!
+  Users.get(req.query)
+    .then(data => {
+      res.status(200).json(data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(500).json({
+        message: "The posts information could not be retrieved."
+      })
+    })
 });
 
 router.get('/:id', (req, res) => {
