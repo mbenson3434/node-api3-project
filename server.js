@@ -1,9 +1,12 @@
 const express = require('express');
-
+const helmet = require('helmet')
+const morgan = require('morgan')
 const userRouter = require('./users/userRouter');
 const server = express();
 
 server.use(express.json())
+server.use(helmet())
+server.use(morgan('tiny'))
 
 server.use("/users", userRouter)
 
